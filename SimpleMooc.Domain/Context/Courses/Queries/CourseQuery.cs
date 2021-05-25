@@ -15,5 +15,10 @@ namespace SimpleMooc.Domain.Context.Courses.Queries
         {
             return course => course.Slug.Equals(slug);
         }
+        
+        public static Expression<Func<Course, bool>> FindById(Guid id)
+        {
+            return course => course.Id.Equals(id);
+        }
     }
 }

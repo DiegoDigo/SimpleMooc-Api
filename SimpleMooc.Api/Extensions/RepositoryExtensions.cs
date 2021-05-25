@@ -16,6 +16,7 @@ namespace SimpleMooc.Api.Extensions
             service.AddTransient<IUserRepository, UserRepository>();
             service.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
             service.AddTransient<IProfileRepository, ProfileRepository>();
+            service.AddTransient<IEnrollmentRepository, EnrollmentRepository>();
             service.AddTransient<IUnitOfWork, UnitOfWork>();
 
             return service;

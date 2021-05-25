@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -38,5 +39,8 @@ namespace SimpleMooc.Infra.Repositories
             => await _context.Courses
                 .AsNoTracking()
                 .ToListAsync();
+
+        public async Task<Course> GetById(Guid id)
+            => await _context.Courses.SingleOrDefaultAsync(CourseQuery.FindById(id));
     }
 }

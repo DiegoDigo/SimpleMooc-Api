@@ -10,8 +10,8 @@ namespace SimpleMooc.Infra.DataContext
         public DbSet<Course> Courses { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
-
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Enrollment> Enrollments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +25,7 @@ namespace SimpleMooc.Infra.DataContext
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new ProfileMap());
             modelBuilder.ApplyConfiguration(new RefreshTokensMap());
+            modelBuilder.ApplyConfiguration(new EnrollmentMap());
 
             base.OnModelCreating(modelBuilder);
         }

@@ -4,7 +4,7 @@ namespace SimpleMooc.Shared.Extensions
     {
         public static string RemoveAccent(this string txt)
         {
-            var bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt); 
+            var bytes = System.Text.Encoding.GetEncoding("utf-8").GetBytes(txt); 
             return System.Text.Encoding.ASCII.GetString(bytes); 
         }
     }

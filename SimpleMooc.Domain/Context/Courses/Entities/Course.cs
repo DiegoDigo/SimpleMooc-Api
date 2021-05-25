@@ -16,13 +16,12 @@ namespace SimpleMooc.Domain.Context.Courses.Entities
         {
         }
 
-        public Course(string name, string description, DateTime startDate, string urlImage)
+        public Course(string name, string description)
         {
             Name = name;
             Description = description;
             Slug = StringUtil.GenerateSlug(name);
-            StartDate = startDate;
-            UrlImage = urlImage;
+            StartDate = DateTime.Now;
         }
 
         public void ChangeName(string name)
