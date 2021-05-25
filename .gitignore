@@ -1,0 +1,8 @@
+bin/
+obj/
+.vscode/
+.vs/
+Migrations/
+.idea/
+Purchase.sln.DotSettings.user
+secrets.json

@@ -1,0 +1,21 @@
+version: "3"
+services:
+  db:
+    image: postgres:alpine
+    volumes:
+      - database_data:/var/lib/postgressql/data
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_DB: simplemooc
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - simplemooc-network
+
+volumes:
+  database_data:
+    driver: local
+
+networks:
+  simplemooc-network:
