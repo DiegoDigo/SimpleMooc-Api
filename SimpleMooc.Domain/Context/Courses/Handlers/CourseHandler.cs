@@ -26,7 +26,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
         public async Task<BaseResponse> Handle(CourseCommand command, CancellationToken cancellationToken)
         {
-            var course = new Course(command.Name, command.Description);
+            var course = new Course(command.Name, command.Description, "");
             var image = command.Image;
 
             if (image is {Length: > 0})

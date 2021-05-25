@@ -28,6 +28,7 @@ namespace SimpleMooc.Api.Controllers
 
         [HttpGet]
         [ApiVersion("1.0")]
+        [AllowAnonymous]
         public async Task<ActionResult<BaseResponse>> GetAll()
         {
             var response = await _courseService.GetAll();

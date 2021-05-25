@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SimpleMooc.Domain.Context.Courses.Entities;
+using SimpleMooc.Infra.Seeds;
 
 namespace SimpleMooc.Infra.Maps
 {
@@ -17,6 +18,8 @@ namespace SimpleMooc.Infra.Maps
             builder.Property(x => x.StartDate).HasColumnType("timestamp").IsRequired();
             builder.Property(x => x.CreateAt).HasColumnType("timestamp").ValueGeneratedOnAdd();
             builder.Property(x => x.UpdateAt).HasColumnType("timestamp").ValueGeneratedOnUpdate();
+
+            builder.HasData(CourseSeed.Courses());
         }
     }
 }
