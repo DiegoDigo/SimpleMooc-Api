@@ -39,5 +39,12 @@ namespace SimpleMooc.Infra.Services
                 .ToList();
             return new BaseResponse(true, "Courses.", courses);
         }
+
+        public async Task<BaseResponse> GetBySlug(string slug)
+        {
+            var searchCourse = await _courseRepository.GetBySlug(slug);
+            var response = _mapper.Map<Course, CourseResponse>(searchCourse);
+            return new BaseResponse(true, "Course.", response);
+        }
     }
 }

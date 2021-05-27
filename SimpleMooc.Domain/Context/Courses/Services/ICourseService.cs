@@ -7,5 +7,6 @@ namespace SimpleMooc.Domain.Context.Courses.Services
     {
         Task<BaseResponse> Search(string search);
         Task<BaseResponse> GetAll();
+        Task<BaseResponse> GetBySlug(string slug);
     }
 }

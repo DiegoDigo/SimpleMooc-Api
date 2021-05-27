@@ -11,5 +11,10 @@ namespace SimpleMooc.Domain.Context.Courses.Queries
             return enrollment => enrollment.Course.Id.Equals(courseId)
                                  && enrollment.User.Id.Equals(userId);
         }
+
+        public static Expression<Func<Enrollment, bool>> FindByUserId(Guid userId)
+        {
+            return enrollment => enrollment.User.Id.Equals(userId);
+        }
     }
 }

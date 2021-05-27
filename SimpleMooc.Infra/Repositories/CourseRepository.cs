@@ -42,5 +42,8 @@ namespace SimpleMooc.Infra.Repositories
 
         public async Task<Course> GetById(Guid id)
             => await _context.Courses.SingleOrDefaultAsync(CourseQuery.FindById(id));
+
+        public async Task<Course> GetBySlug(string slug)
+            => await _context.Courses.SingleOrDefaultAsync(CourseQuery.SearchSlug(slug));
     }
 }

@@ -10,6 +10,7 @@ namespace SimpleMooc.Domain.Context.Courses.Repositories
         Task<IEnumerable<Course>> SearchCourse(string search);
         Task<IEnumerable<Course>> GetAll();
         Task<Course> GetById(Guid id);
+        Task<Course> GetBySlug(string slug);
         Task Save(Course course);
         void Update(Course course);
     }

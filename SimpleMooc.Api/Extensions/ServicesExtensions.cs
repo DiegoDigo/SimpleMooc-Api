@@ -21,6 +21,7 @@ namespace SimpleMooc.Api.Extensions
             service.AddTransient<IUploadService, UploadService>();
             service.AddTransient<ITokenService, TokenService>();
             service.AddTransient<IProfileService, ProfileService>();
+            service.AddTransient<IEnrollmentService, EnrollmentService>();
             service.AddTransient<IUploadService, UploadService>();
 
             return service;

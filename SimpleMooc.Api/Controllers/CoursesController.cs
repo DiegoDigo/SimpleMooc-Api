@@ -35,25 +35,23 @@ namespace SimpleMooc.Api.Controllers
             return (response.Content as List<CourseResponse>)!.Any() ? Ok(response) : NoContent();
         }
         
+        [HttpGet("{slug}")]
+        [ApiVersion("1.0")]
+        [AllowAnonymous]
+        public async Task<ActionResult<BaseResponse>>GetBySlug(string slug)
+        {
+            var response = await _courseService.GetBySlug(slug);
+            return response.Success ? Ok(response) : NotFound();
+        }
+        
         [HttpPost]
         [ApiVersion("1.0")]
-        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BaseResponse>> Create([FromForm] CourseCommand command)
         {
             var response = await _mediator.Send(command);
             return response.Success ? Ok(response) : NoContent();
         }
 
-        [HttpPost("enrollment")]
-        [ApiVersion("1.0")]
-        public async Task<ActionResult<BaseResponse>> Enrollment([FromBody] EnrollmentCommand command)
-        {
-            command = command with
-            {
-                UserId = SubjectUser.GetId(User)
-            };
-            var response = await _mediator.Send(command);
-            return response.Success ? Ok(response) : StatusCode(406, response);
-        }
+
     }
 }
