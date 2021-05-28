@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SimpleMooc.Shared.Services
@@ -8,5 +9,6 @@ namespace SimpleMooc.Shared.Services
     {
         Task<string> UploadImageProfile(Guid userId, Stream image);
         Task<string> UploadImageCourse(string slug, Stream image);
+        Task<string> UploadMaterial(string name, Stream video, CancellationToken cancellationToken);
     }
 }

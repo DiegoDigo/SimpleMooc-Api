@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SimpleMooc.Api.Extensions;
-using SimpleMooc.Infra.Seeds;
 
 namespace SimpleMooc.Api
 {
@@ -35,7 +34,6 @@ namespace SimpleMooc.Api
             services.AddDependencyAutoMapper();
             services.AddDependencyApiExplore();
             services.AddDependencyValidation();
-            
 
         }
 

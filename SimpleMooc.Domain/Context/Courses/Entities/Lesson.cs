@@ -10,19 +10,28 @@ namespace SimpleMooc.Domain.Context.Courses.Entities
         public int Number { get; private set; }
         public DateTime ReleaseDate { get; private set; }
         public Course Course { get; private set; }
+        public string UrlVideos { get; private set; }
 
-        public Lesson(string name, string description, int number,  Course course)
+        public Lesson(string name, string description, Course course)
         {
             Name = name;
             Description = description;
-            Number = number;
             ReleaseDate = DateTime.Now.AddDays(15);
             Course = course;
         }
 
         public Lesson()
         {
-          
+        }
+
+        public void ChangeNumberLesson(int number)
+        {
+            Number = number;
+        }
+
+        public void ChangeMaterial(string url)
+        {
+            UrlVideos = url;
         }
     }
 }
