@@ -35,7 +35,7 @@ namespace SimpleMooc.Api.Controllers
         [DisableRequestSizeLimit,
          RequestFormLimits(MultipartBodyLengthLimit = int.MaxValue,
              ValueLengthLimit = int.MaxValue)]
-        public async Task<ActionResult<BaseResponse>> Create([FromBody] LessonCommand command)
+        public async Task<ActionResult<BaseResponse>> Create([FromForm] LessonCommand command)
         {
             var response = await _mediator.Send(command);
             return response.Success ? StatusCode(201, response) : StatusCode(406, response);

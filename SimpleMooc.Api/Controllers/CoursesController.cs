@@ -46,10 +46,11 @@ namespace SimpleMooc.Api.Controllers
         
         [HttpPost]
         [ApiVersion("1.0")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<BaseResponse>> Create([FromForm] CourseCommand command)
         {
             var response = await _mediator.Send(command);
-            return response.Success ? Ok(response) : NoContent();
+            return response.Success ? StatusCode(201, response) : NoContent();
         }
 
 
