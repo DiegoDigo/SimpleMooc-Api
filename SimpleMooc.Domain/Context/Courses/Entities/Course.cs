@@ -28,7 +28,6 @@ namespace SimpleMooc.Domain.Context.Courses.Entities
         public void ChangeName(string name)
         {
             Name = name;
-            Slug = StringUtil.GenerateSlug(name);
         }
 
         public void ChangeDescription(string description)

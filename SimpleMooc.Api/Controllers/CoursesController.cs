@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SimpleMooc.Api.Core;
 using SimpleMooc.Domain.Context.Courses.Command.Input;
 using SimpleMooc.Domain.Context.Courses.Command.Output;
 using SimpleMooc.Domain.Context.Courses.Services;
@@ -51,6 +50,15 @@ namespace SimpleMooc.Api.Controllers
         {
             var response = await _mediator.Send(command);
             return response.Success ? StatusCode(201, response) : NoContent();
+        }
+        
+        [HttpPut]
+        [ApiVersion("1.0")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<BaseResponse>> Update([FromForm] CourseUpdateCommand command)
+        {
+            var response = await _mediator.Send(command);
+            return response.Success ? Ok(response) : NotFound();
         }
 
 

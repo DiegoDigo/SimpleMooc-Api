@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation.TestHelper;
 using MediatR;
 using SimpleMooc.Domain.Context.Users.Command.Input;
 using SimpleMooc.Domain.Context.Users.Command.Output;

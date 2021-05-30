@@ -17,7 +17,8 @@ namespace SimpleMooc.Infra.Maps
             builder.Property(x => x.Role).HasColumnType("smallint").IsRequired().HasConversion<int>();
             builder.Property(x => x.CreateAt).HasColumnType("timestamp").ValueGeneratedOnAdd();
             builder.Property(x => x.UpdateAt).HasColumnType("timestamp").ValueGeneratedOnUpdate();
-            
+
         }
+        
     }
 }

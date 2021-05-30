@@ -36,10 +36,15 @@ namespace SimpleMooc.Domain.Context.Users.Entities
         {
             Active = active;
         }
-        
+
         public void ChangeEmail(string email)
         {
             Email = email;
+        }
+
+        public void ChangeRole(ERole role)
+        {
+            Role = role;
         }
     }
 }

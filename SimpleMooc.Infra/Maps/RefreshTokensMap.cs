@@ -1,3 +1,4 @@
+using CloudinaryDotNet.Actions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SimpleMooc.Domain.Context.Users.Entities;
@@ -17,5 +18,6 @@ namespace SimpleMooc.Infra.Maps
             builder.Property(x => x.UpdateAt).HasColumnType("timestamp").ValueGeneratedOnUpdate();
             builder.HasOne(x => x.User);
         }
+        
     }
 }
