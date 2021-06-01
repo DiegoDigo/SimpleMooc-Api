@@ -7,6 +7,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using SimpleMooc.Shared.Config;
 using SimpleMooc.Shared.Services;
+using SimpleMooc.Shared.Util;
 
 namespace SimpleMooc.Infra.Services
 {
@@ -43,10 +44,12 @@ namespace SimpleMooc.Infra.Services
 
         private async Task<string> UploadVideo(string identifier, Stream video, CancellationToken cancellationToken)
         {
+            var slug = StringUtil.GenerateSlug(identifier);
             var imageParams = new VideoUploadParams()
             {
-                File = new FileDescription(identifier, video),
-                PublicId = $"simple-mooc/material/{identifier}",
+                
+                File = new FileDescription(slug, video),
+                PublicId = $"simple-mooc/material/{slug}",
                 Overwrite = true,
                 EagerTransforms = new List<Transformation>()
                 {

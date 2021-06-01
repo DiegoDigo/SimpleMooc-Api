@@ -7,10 +7,7 @@ namespace SimpleMooc.Domain.Core.Validations
     {
         public LessonValidator()
         {
-            RuleFor(x => x.Description)
-                .NotEmpty()
-                .NotNull();
-            
+
             RuleFor(x => x.Material)
                 .NotEmpty()
                 .NotNull();
