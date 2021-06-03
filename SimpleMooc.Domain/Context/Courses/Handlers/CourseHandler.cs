@@ -29,7 +29,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
             var course = await _courseRepository.GetById(command.Id);
             if (course is null)
             {
-                return new BaseResponse(false, "Course not found", null);
+                return new BaseResponse(false, "Curso não encontrado", null);
             }
             var image = command.Image;
 
@@ -42,7 +42,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
             _courseRepository.Update(course);
             await _unitOfWork.Commit();
-            return new BaseResponse(true, "Course Update success", course);
+            return new BaseResponse(true, "Curso atualizado com sucesso.", course);
         }
 
         public async Task<BaseResponse> Handle(CourseCommand command, CancellationToken cancellationToken)
@@ -57,7 +57,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
             await _courseRepository.Save(course);
             await _unitOfWork.Commit();
-            return new BaseResponse(true, "Course Register success", course);
+            return new BaseResponse(true, "Curso cadastrado com sucesso.", course);
         }
     }
 }

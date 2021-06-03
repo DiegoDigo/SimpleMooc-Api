@@ -27,7 +27,7 @@ namespace SimpleMooc.Infra.Services
                 .Select(course => _mapper.Map<Course, CourseResponse>(course))
                 .OrderBy(course => course.Name)
                 .ToList();
-            return new BaseResponse(true, "Courses.", courses);
+            return new BaseResponse(true, "Cursos.", courses);
         }
         
         public async Task<BaseResponse> GetAll()
@@ -37,14 +37,18 @@ namespace SimpleMooc.Infra.Services
                 .Select(course => _mapper.Map<Course, CourseResponse>(course))
                 .OrderBy(course => course.Name)
                 .ToList();
-            return new BaseResponse(true, "Courses.", courses);
+            return new BaseResponse(true, "Cursos.", courses);
         }
 
         public async Task<BaseResponse> GetBySlug(string slug)
         {
             var searchCourse = await _courseRepository.GetBySlug(slug);
+            if (searchCourse is null)
+            {
+                return new BaseResponse(false, "Curso não encontrado.", null);
+            }
             var response = _mapper.Map<Course, CourseResponse>(searchCourse);
-            return new BaseResponse(true, "Course.", response);
+            return new BaseResponse(true, "Curso.", response);
         }
     }
 }
