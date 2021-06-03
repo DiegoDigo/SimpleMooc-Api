@@ -23,10 +23,7 @@ namespace SimpleMooc.Domain.Core.Validations
                 .EmailAddress()
                 .NotEmpty()
                 .NotNull();
-            
-            RuleFor(x => x.UserId)
-                .NotEmpty()
-                .NotNull();
+
         }
     }
 }
