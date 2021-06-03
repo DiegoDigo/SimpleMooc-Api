@@ -10,7 +10,8 @@ namespace SimpleMooc.Domain.Context.Courses.Mapper
         {
             CreateMap<Enrollment, EnrollmentResponse>()
                 .ForMember(dst => dst.Id, map => map.MapFrom(src => src.Id))
-                .ForMember(dst => dst.Nome, map => map.MapFrom(src => src.Course.Name))
+                .ForMember(dst => dst.Slug, map => map.MapFrom(src => src.Course.Slug))
+                .ForMember(dst => dst.Name, map => map.MapFrom(src => src.Course.Name))
                 .ForMember(dst => dst.Status, map => map.MapFrom(src => src.Status));
         }
     }
