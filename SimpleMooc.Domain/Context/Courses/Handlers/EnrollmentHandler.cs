@@ -1,7 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using SimpleMooc.Domain.Context.Courses.Command.Input;
+using SimpleMooc.Domain.Context.Courses.Command.Output;
 using SimpleMooc.Domain.Context.Courses.Entities;
 using SimpleMooc.Domain.Context.Courses.Repositories;
 using SimpleMooc.Domain.Context.Users.Repositories;
@@ -16,14 +18,16 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
         private readonly ICourseRepository _courseRepository;
         private readonly IEnrollmentRepository _enrollmentRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public EnrollmentHandler(IUserRepository userRepository, ICourseRepository courseRepository,
-            IEnrollmentRepository enrollmentRepository, IUnitOfWork unitOfWork)
+            IEnrollmentRepository enrollmentRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _userRepository = userRepository;
             _courseRepository = courseRepository;
             _enrollmentRepository = enrollmentRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<BaseResponse> Handle(EnrollmentCommand command, CancellationToken cancellationToken)
@@ -48,10 +52,10 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
             }
 
             var enrollment = new Enrollment(user, course);
-
             await _enrollmentRepository.Save(enrollment);
             await _unitOfWork.Commit();
-            return new BaseResponse(true, "Enrollment success.", enrollment);
+            var response = _mapper.Map<Enrollment, EnrollmentResponse>(enrollment);
+            return new BaseResponse(true, "Enrollment success.", response);
         }
     }
 }

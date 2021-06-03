@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleMooc.Api.Core;
 using SimpleMooc.Domain.Context.Courses.Command.Input;
@@ -15,6 +16,7 @@ namespace SimpleMooc.Api.Controllers
     [ApiController]
     [Route("api/v{version:ApiVersion}/enrollments")]
     [Authorize]
+    
     public class EnrollmentController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,8 +28,19 @@ namespace SimpleMooc.Api.Controllers
             _enrollmentService = enrollmentService;
         }
 
+        /// <summary>
+        /// Inscrever-se no curso
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns>Restorna a inscrição.</returns>
+        /// <response code="201">Restorna a inscrição.</response>
+        /// <response code="406">Retorna os possíveis erros de validação</response>  
+        /// <response code="401">Usuário não está logado.</response>  
         [HttpPost]
         [ApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<BaseResponse>> Enrollment([FromBody] EnrollmentCommand command)
         {
             command = command with
@@ -35,11 +48,21 @@ namespace SimpleMooc.Api.Controllers
                 UserId = SubjectUser.GetId(User)
             };
             var response = await _mediator.Send(command);
-            return response.Success ? Ok(response) : StatusCode(406, response);
+            return response.Success ? StatusCode(201, response) : StatusCode(406, response);
         }
 
+        /// <summary>
+        /// Pegar cursos que o usuario se inscreveu
+        /// </summary>
+        /// <returns>Restorna a inscrição.</returns>
+        /// <response code="200">Restorna a inscrição.</response>
+        /// <response code="204">Não tem cursos inscrito .</response>
+        /// <response code="401">Usuário não está logado.</response>  
         [HttpGet]
         [ApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<BaseResponse>> GetEnrollment()
         {
             var userId = SubjectUser.GetId(User);
