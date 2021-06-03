@@ -1,7 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using SimpleMooc.Domain.Context.Courses.Command.Input;
+using SimpleMooc.Domain.Context.Courses.Command.Output;
 using SimpleMooc.Domain.Context.Courses.Entities;
 using SimpleMooc.Domain.Context.Courses.Repositories;
 using SimpleMooc.Shared.Entities;
@@ -16,12 +18,14 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
         private readonly IUploadService _uploadService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICourseRepository _courseRepository;
+        private readonly IMapper _mapper;
 
-        public CourseHandler(IUploadService uploadService, IUnitOfWork unitOfWork, ICourseRepository courseRepository)
+        public CourseHandler(IUploadService uploadService, IUnitOfWork unitOfWork, ICourseRepository courseRepository, IMapper mapper)
         {
             _uploadService = uploadService;
             _unitOfWork = unitOfWork;
             _courseRepository = courseRepository;
+            _mapper = mapper;
         }
 
         public async Task<BaseResponse> Handle(CourseUpdateCommand command, CancellationToken cancellationToken)
@@ -42,7 +46,8 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
             _courseRepository.Update(course);
             await _unitOfWork.Commit();
-            return new BaseResponse(true, "Curso atualizado com sucesso.", course);
+            var response = _mapper.Map<Course, CourseResponse>(course);
+            return new BaseResponse(true, "Curso atualizado com sucesso.", response);
         }
 
         public async Task<BaseResponse> Handle(CourseCommand command, CancellationToken cancellationToken)
@@ -57,7 +62,8 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
             await _courseRepository.Save(course);
             await _unitOfWork.Commit();
-            return new BaseResponse(true, "Curso cadastrado com sucesso.", course);
+            var response = _mapper.Map<Course, CourseResponse>(course);
+            return new BaseResponse(true, "Curso cadastrado com sucesso.", response);
         }
     }
 }
