@@ -34,7 +34,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var findByEmail = await _userRepository.GetByEmail(command.Email);
             if (findByEmail is not null)
             {
-                return new BaseResponse(false, "Email is Register.", null);
+                return new BaseResponse(false, "Email já cadastrado.", null);
             }
 
             var newUser = new User(command.Email);
@@ -50,7 +50,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
 
             await _unitOfWork.Commit();
             var response = new TokenResponse(token, refreshToken.Token);
-            return new BaseResponse(true, "user Register.", response);
+            return new BaseResponse(true, "Usuário registado.", response);
         }
 
         public async Task<BaseResponse> Handle(LoginCommand command, CancellationToken cancellationToken)
@@ -58,12 +58,12 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var user = await _userRepository.GetByEmail(command.Email);
             if (user is null)
             {
-                return new BaseResponse(false, "Email not register.", null);
+                return new BaseResponse(false, "Email não cadastrado.", null);
             }
 
             if (!user.VerifyPassword(command.Password, user.Password))
             {
-                return new BaseResponse(false, "User or password invalid.", null);
+                return new BaseResponse(false, "email ou senha inválido.", null);
             }
 
             var refreshToken = await _refreshTokenRepository.GetByUserId(user.Id);
@@ -79,7 +79,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var token = _tokenService.GenerateToken(user);
 
             var response = new TokenResponse(token, refreshToken.Token);
-            return new BaseResponse(true, "user Register.", response);
+            return new BaseResponse(true, "Login com sucesso.", response);
         }
 
         public async Task<BaseResponse> Handle(RefreshTokenCommand command, CancellationToken cancellationToken)
@@ -87,7 +87,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var refreshToken = await _refreshTokenRepository.GetByToken(command.Refresh);
             if (refreshToken is null || refreshToken.IsExpired())
             {
-                return new BaseResponse(false, "token invalid", null);
+                return new BaseResponse(false, "token inválido", null);
             }
 
             var refresh = _tokenService.GenerateRefreshToken();
