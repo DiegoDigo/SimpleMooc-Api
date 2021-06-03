@@ -37,7 +37,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
             var course = await _courseRepository.GetById(command.CourseId);
             if (course is null)
             {
-                return new BaseResponse(false, "course not found.", null);
+                return new BaseResponse(false, "Curso não encontrado.", null);
             }
 
             var lessons = await _lessonRepository.GetAllByCourse(course.Id);
@@ -51,7 +51,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
             {
                 if (!file.ContentType.StartsWith("video"))
                 {
-                    return new BaseResponse(true, "media not support.", null);
+                    return new BaseResponse(true, "media nao suportada.", null);
                 }
 
                 var urlMaterial =
@@ -64,7 +64,7 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
             await _lessonRepository.Save(lesson);
             await _iUnitOfWork.Commit();
             var lessonMaterialResponse = _mapper.Map<Lesson, CourseLessonResponse>(lesson);
-            return new BaseResponse(true, "register new lesson", lessonMaterialResponse);
+            return new BaseResponse(true, "Aula registrada com sucesso.", lessonMaterialResponse);
         }
     }
 }

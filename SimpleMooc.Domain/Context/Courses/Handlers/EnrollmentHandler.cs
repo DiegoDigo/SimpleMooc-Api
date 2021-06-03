@@ -36,26 +36,26 @@ namespace SimpleMooc.Domain.Context.Courses.Handlers
 
             if (enrollmentFind is not null)
             {
-                return new BaseResponse(false, "user already register to course.", null);
+                return new BaseResponse(false, "Você já esta cadastrado nesse curso.", null);
             }
             
             var user = await _userRepository.GetById(command.UserId);
             if (user is null)
             {
-                return new BaseResponse(false, "user not found.", null);
+                return new BaseResponse(false, "Usuário não encontrado.", null);
             }
 
             var course = await _courseRepository.GetById(command.CourseId);
             if (course is null)
             {
-                return new BaseResponse(false, "course not found.", null);
+                return new BaseResponse(false, "Curso nao encontrado.", null);
             }
 
             var enrollment = new Enrollment(user, course);
             await _enrollmentRepository.Save(enrollment);
             await _unitOfWork.Commit();
             var response = _mapper.Map<Enrollment, EnrollmentResponse>(enrollment);
-            return new BaseResponse(true, "Enrollment success.", response);
+            return new BaseResponse(true, "Inscrição realizada com sucesso.", response);
         }
     }
 }

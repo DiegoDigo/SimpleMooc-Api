@@ -29,7 +29,7 @@ namespace SimpleMooc.Infra.Services
                 .Select(lesson => _mapper.Map<Lesson, CourseLessonResponse>(lesson))
                 .ToList();
 
-            return new BaseResponse(true, "Lessons", response);
+            return new BaseResponse(true, "Aulas", response);
         }
     }
 }

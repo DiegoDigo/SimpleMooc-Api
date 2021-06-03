@@ -27,7 +27,7 @@ namespace SimpleMooc.Infra.Services
             var courseResponses = enrollments
                 .Select(enrollment => _mapper.Map<Course, CourseResponse>(enrollment.Course))
                 .ToList();
-            return new BaseResponse(true, "enrollment", courseResponses);
+            return new BaseResponse(true, "Inscrições", courseResponses);
         }
     }
 }
