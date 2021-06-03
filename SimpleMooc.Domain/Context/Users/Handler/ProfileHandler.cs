@@ -36,7 +36,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var user = await _userRepository.GetById(command.UserId);
             if (user is null)
             {
-                return new BaseResponse(false, "User not found.", null);
+                return new BaseResponse(false, "Usuário não encontrado.", null);
             }
 
             var profile = new Entities.Profile(command.FirstName, command.LastName, user);
@@ -51,7 +51,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             await _profileRepository.Save(profile);
             await _unitOfWork.Commit();
             var profileResponse = _mapper.Map<Entities.Profile, ProfileResponse>(profile);
-            return new BaseResponse(true, "Profile save success.", profileResponse);
+            return new BaseResponse(true, "Perfil salvo com sucesso.", profileResponse);
         }
 
         public async Task<BaseResponse> Handle(ProfileUpdateCommand command, CancellationToken cancellationToken)
@@ -59,13 +59,13 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var user = await _userRepository.GetById(command.UserId);
             if (user is null)
             {
-                return new BaseResponse(false, "User not found.", null);
+                return new BaseResponse(false, "Usuáro não encontrado.", null);
             }
 
             var byEmail = await _userRepository.GetByEmail(command.Email);
             if (byEmail is not null && !user.Email.Equals(command.Email))
             {
-                return new BaseResponse(false, "email already exists.", null);
+                return new BaseResponse(false, "Email já cadastrado.", null);
             }
 
             user.ChangeEmail(command.Email);
@@ -75,7 +75,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             var profile = await _profileRepository.GetById(command.Id);
             if (profile is null)
             {
-                return new BaseResponse(false, "Profile not found", null);
+                return new BaseResponse(false, "Perfil não encontrado.", null);
             }
 
             profile.ChangeFirstName(command.FirstName);
@@ -92,7 +92,7 @@ namespace SimpleMooc.Domain.Context.Users.Handler
             _profileRepository.Update(profile);
             await _unitOfWork.Commit();
             var profileResponse = _mapper.Map<Entities.Profile, ProfileResponse>(profile);
-            return new BaseResponse(true, "Profile save success.", profileResponse);
+            return new BaseResponse(true, "Profile save sucesso.", profileResponse);
         }
     }
 }

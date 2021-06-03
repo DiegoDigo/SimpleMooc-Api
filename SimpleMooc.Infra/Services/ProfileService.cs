@@ -28,15 +28,15 @@ namespace SimpleMooc.Infra.Services
             var user = await _userRepository.GetById(id);
             if (user is null)
             {
-                return new BaseResponse(false, "User not found.", null);
+                return new BaseResponse(false, "Usuário não encontrado.", null);
             }
 
             var profile = await _profileRepository.GetByUserId(user.Id);
             var response = _mapper.Map<Profile, ProfileResponse>(profile);
             
             return profile is null
-                ? new BaseResponse(false, "profile not found by user.", null)
-                : new BaseResponse(true, "profile.", response);
+                ? new BaseResponse(false, "Perfil não encontrado.", null)
+                : new BaseResponse(true, "Perfil.", response);
         }
     }
 }
