@@ -4,5 +4,5 @@ obj/
 .vs/
 Migrations/
 .idea/
-Purchase.sln.DotSettings.user
+SimpleMooc.sln.DotSettings.user
 secrets.json
