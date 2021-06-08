@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -69,6 +70,25 @@ namespace SimpleMooc.Api.Controllers
 
             var response = await _enrollmentService.GetAll(userId);
             return (response.Content as List<CourseResponse>)!.Any() ? Ok(response) : NoContent();
+        }
+        
+        /// <summary>
+        /// Sair do courso
+        /// </summary>
+        /// <returns>Retorna ok.</returns>
+        /// <response code="200">Restorna q saiu do curso.</response>
+        /// <response code="204">Não tem cursos inscrito .</response>
+        /// <response code="401">Usuário não está logado.</response>  
+        [HttpPut("{courseId:Guid}")]
+        [ApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult> CloseEnrollment(Guid courseId)
+        {
+            var userId = SubjectUser.GetId(User);
+            var response = await _enrollmentService.CloseEnrollmentByCourseIdAndUserId(courseId, userId);
+            return response.Success  ? Ok(response) : StatusCode(404, response);
         }
     }
 }

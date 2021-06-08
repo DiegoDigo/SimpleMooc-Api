@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -80,7 +81,7 @@ namespace SimpleMooc.Api.Controllers
         public async Task<ActionResult<BaseResponse>> Create([FromForm] CourseCommand command)
         {
             var response = await _mediator.Send(command);
-            return response.Success ? StatusCode(201, response) : NoContent();
+            return response.Success ? StatusCode(201, response) : StatusCode(406, response);
         }
         
         /// <summary>
@@ -106,6 +107,45 @@ namespace SimpleMooc.Api.Controllers
             return response.Success ? Ok(response) : NotFound();
         }
 
+        /// <summary>
+        /// Buscar curso do descrição.
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns>Retorna todo os cursos de acordo com a descriação</returns>
+        /// <response code="200">Retorna os curso.</response>
+        /// <response code="404">Não encontrou curso para esse atalho.</response>
+        [HttpGet("search/{search}")]
+        [ApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [AllowAnonymous]
+        public async Task<ActionResult<BaseResponse>> Search(string search)
+        {
+            var response = await _courseService.Search(search);
+            return response.Success ? Ok(response) : NoContent();
+        }
+        
+        /// <summary>
+        /// Deletar curso.
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <response code="204">Curso deletado.</response>
+        /// <response code="404">Não encontrou curso.</response>
+        /// <response code="401">Usuário não está logado.</response>  
+        /// <response code="403">Usuário não tem permissão.</response>  
+        [HttpDelete("{courseId}")]
+        [ApiVersion("1.0")]
+        [Authorize(Roles = "Admin")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<BaseResponse>> Delete(Guid courseId)
+        {
+            var response = await _courseService.Delete(courseId);
+            return response.Success ? StatusCode(204, response) : NoContent();
+        }
 
     }
 }

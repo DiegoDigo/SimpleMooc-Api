@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,6 +7,7 @@ using SimpleMooc.Domain.Context.Courses.Entities;
 using SimpleMooc.Domain.Context.Courses.Repositories;
 using SimpleMooc.Domain.Context.Courses.Services;
 using SimpleMooc.Shared.Entities;
+using SimpleMooc.Shared.Repositories;
 
 namespace SimpleMooc.Infra.Services
 {
@@ -13,11 +15,13 @@ namespace SimpleMooc.Infra.Services
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CourseService(ICourseRepository courseRepository, IMapper mapper)
+        public CourseService(ICourseRepository courseRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _courseRepository = courseRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BaseResponse> Search(string search)
@@ -49,6 +53,18 @@ namespace SimpleMooc.Infra.Services
             }
             var response = _mapper.Map<Course, CourseResponse>(searchCourse);
             return new BaseResponse(true, "Curso.", response);
+        }
+
+        public async Task<BaseResponse> Delete(Guid courseId)
+        {
+            var course = await _courseRepository.GetById(courseId);
+            if (course is null)
+            {
+                return new BaseResponse(false, "Curso não encontrado.", null);
+            }
+            _courseRepository.Delete(course);
+            await _unitOfWork.Commit();
+            return new BaseResponse(true, "Curso deletado.", null);
         }
     }
 }

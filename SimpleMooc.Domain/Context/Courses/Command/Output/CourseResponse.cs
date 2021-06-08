@@ -9,7 +9,8 @@ namespace SimpleMooc.Domain.Context.Courses.Command.Output
         public string Description { get; private set; }
         public string Slug { get; private set; }
         public string Url { get; private set; }
-        public DateTime Start { get; private set; }
+        public int Star { get; private set; }
+        public DateTime CreateAt { get; private set; }
 
         public CourseResponse()
         {

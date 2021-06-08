@@ -7,5 +7,6 @@ namespace SimpleMooc.Domain.Context.Courses.Services
     public interface IEnrollmentService
     {
         Task<BaseResponse> GetAll(Guid userId);
+        Task<BaseResponse> CloseEnrollmentByCourseIdAndUserId(Guid courseId, Guid userId);
     }
 }

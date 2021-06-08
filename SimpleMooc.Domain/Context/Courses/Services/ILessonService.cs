@@ -7,5 +7,6 @@ namespace SimpleMooc.Domain.Context.Courses.Services
     public interface ILessonService
     {
         Task<BaseResponse> GetAllLessonByCourse(Guid courseId);
+        Task<BaseResponse> GetQuantitiesLessonByCourse(Guid courseId);
     }
 }

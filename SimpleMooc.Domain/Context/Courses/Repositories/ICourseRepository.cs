@@ -13,5 +13,6 @@ namespace SimpleMooc.Domain.Context.Courses.Repositories
         Task<Course> GetBySlug(string slug);
         Task Save(Course course);
         void Update(Course course);
+        void Delete(Course course);
     }
 }

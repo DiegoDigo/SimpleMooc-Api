@@ -32,5 +32,8 @@ namespace SimpleMooc.Infra.Repositories
                 .Include(enrollment => enrollment.Course)
                 .Where(EnrollmentQuery.FindByUserId(userId))
                 .ToListAsync();
+
+        public void Delete(Enrollment enrollment)
+            => _context.Remove(enrollment);
     }
 }

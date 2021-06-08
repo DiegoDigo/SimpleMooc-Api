@@ -9,19 +9,19 @@ namespace SimpleMooc.Domain.Context.Courses.Entities
         public string Name { get; private set; }
         public string Description { get; private set; }
         public string Slug { get; private set; }
-        public DateTime StartDate { get; private set; }
+        public int Stars { get; private set; }
         public string UrlImage { get; private set; }
 
         public Course()
         {
         }
 
-        public Course(string name, string description, string urlImage)
+        public Course(string name, string description, string urlImage, int stars = 0)
         {
             Name = name;
             Description = description;
             Slug = StringUtil.GenerateSlug(name);
-            StartDate = DateTime.Now;
+            Stars = stars;
             UrlImage = urlImage;
         }
 
@@ -38,6 +38,11 @@ namespace SimpleMooc.Domain.Context.Courses.Entities
         public void ChangeUrlImage(string url)
         {
             UrlImage = url;
+        }
+
+        public void ChangeStars(int numStart)
+        {
+            Stars = numStart;
         }
     }
 }

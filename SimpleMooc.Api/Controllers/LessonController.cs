@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleMooc.Domain.Context.Courses.Command.Input;
 using SimpleMooc.Domain.Context.Courses.Command.Output;
-using SimpleMooc.Domain.Context.Courses.Entities;
 using SimpleMooc.Domain.Context.Courses.Services;
 using SimpleMooc.Shared.Entities;
 
@@ -72,6 +71,22 @@ namespace SimpleMooc.Api.Controllers
         {
             var response = await _lessonService.GetAllLessonByCourse(courseId);
             return ((List<CourseLessonResponse>) response.Content).Any() ? Ok(response) : NoContent();
+        }
+
+        /// <summary>
+        /// Buscar a quantidade de aulas
+        /// </summary>
+        /// <param name="courseId"></param>
+        /// <returns>Retorna a quantidade de aula.</returns>
+        /// <response code="200">Buscar quantidade de aula.</response>
+        [HttpGet("{courseId:Guid}/quantities")]
+        [ApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
+        public async Task<ActionResult<BaseResponse>> GetQuantitiesLesson(Guid courseId)
+        {
+            var response = await _lessonService.GetQuantitiesLessonByCourse(courseId);
+            return Ok(response);
         }
     }
 }

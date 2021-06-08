@@ -24,12 +24,20 @@ namespace SimpleMooc.Infra.Services
 
         public async Task<BaseResponse> GetAllLessonByCourse(Guid courseId)
         {
-            var materials = await _lessonRepository.GetAllByCourse(courseId);
-            var response = materials
+            var lessons = await _lessonRepository.GetAllByCourse(courseId);
+            var response = lessons
                 .Select(lesson => _mapper.Map<Lesson, CourseLessonResponse>(lesson))
                 .ToList();
 
             return new BaseResponse(true, "Aulas", response);
+        }
+
+        public async Task<BaseResponse> GetQuantitiesLessonByCourse(Guid courseId)
+        {
+            var lessonsEnumerable = await _lessonRepository.GetAllByCourse(courseId);
+            var lessons = lessonsEnumerable.ToList();
+            var response = new QuantityLessonResponse(lessons.Count);
+            return new BaseResponse(true, "Quantidade de aulas", response);
         }
     }
 }

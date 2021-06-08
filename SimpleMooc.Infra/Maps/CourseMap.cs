@@ -15,7 +15,7 @@ namespace SimpleMooc.Infra.Maps
             builder.Property(x => x.Slug).IsRequired().HasColumnType("varchar(255)").IsRequired();
             builder.HasIndex(x => x.Slug).IsUnique();
             builder.Property(x => x.Description).HasColumnType("varchar(255)");
-            builder.Property(x => x.StartDate).HasColumnType("timestamp").IsRequired();
+            builder.Property(x => x.Stars).HasColumnType("smallint").IsRequired();
             builder.Property(x => x.CreateAt).HasColumnType("timestamp").ValueGeneratedOnAdd();
             builder.Property(x => x.UpdateAt).HasColumnType("timestamp").ValueGeneratedOnUpdate();
 

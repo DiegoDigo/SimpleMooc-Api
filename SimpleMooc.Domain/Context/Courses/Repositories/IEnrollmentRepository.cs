@@ -10,5 +10,6 @@ namespace SimpleMooc.Domain.Context.Courses.Repositories
         Task Save(Enrollment enrollment);
         Task<Enrollment> GetByUserIdAndCourseId(Guid userId, Guid courseId);
         Task<IEnumerable<Enrollment>> GetByUserId(Guid userId);
+        void Delete(Enrollment enrollment);
     }
 }

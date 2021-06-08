@@ -45,5 +45,8 @@ namespace SimpleMooc.Infra.Repositories
 
         public async Task<Course> GetBySlug(string slug)
             => await _context.Courses.SingleOrDefaultAsync(CourseQuery.SearchSlug(slug));
+
+        public void Delete(Course course)
+            => _context.Courses.Remove(course);
     }
 }
